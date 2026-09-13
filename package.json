@@ -1,0 +1,28 @@
+{
+  "name": "omp-antigravity-guard",
+  "version": "1.0.0",
+  "description": "Zero-configuration oh-my-pi (omp) extension to bypass Google Cloud Code Antigravity false 429 quota exhaustion errors.",
+  "type": "module",
+  "main": "index.ts",
+  "keywords": [
+    "oh-my-pi",
+    "omp",
+    "antigravity",
+    "google",
+    "gemini",
+    "extension",
+    "plugin",
+    "429",
+    "quota-exhausted"
+  ],
+  "author": "ygq-future",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ygq-future/omp-antigravity-guard.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ygq-future/omp-antigravity-guard/issues"
+  },
+  "homepage": "https://github.com/ygq-future/omp-antigravity-guard#readme"
+}
