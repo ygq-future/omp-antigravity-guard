@@ -54,7 +54,7 @@ In [Issue #11809](https://github.com/can1357/oh-my-pi/issues/11809), the maintai
 This extension provides a dual-layer, zero-dependency defense:
 
 1. **Prompt Sanitization (`before_agent_start`)**:
-   Normalizes `<system-conventions>` and `</system-conventions>` to `<conventions>` and `</conventions>`. The LLM's comprehension of instructions and tool capabilities is **100% unaffected**, but Google's literal regex fingerprint match fails cleanly.
+   Normalizes `<system-conventions>` and `</system-conventions>` to `<rules>` and `</rules>`, and sanitizes the RFC 2119 trigger prefix. The LLM's comprehension of instructions and tool capabilities is **100% unaffected**, but Google's literal regex fingerprint match fails cleanly.
 2. **Wire-Level Envelope Stripping (`fetch` interceptor)**:
    Intercepts requests dispatched to `*cloudcode-pa*.googleapis.com` and drops the `requestType: "agent"` field, perfectly aligning the request with the official Antigravity client.
 

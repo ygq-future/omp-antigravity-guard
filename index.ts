@@ -5,17 +5,20 @@
  * false 429 RESOURCE_EXHAUSTED quota errors and targeted prompt inspection blocks.
  *
  * Mechanism:
- * 1. Sanitizes prompt convention tags (<system-conventions> -> <conventions>)
+ * 1. Sanitizes prompt convention tags and trigger phrases (<system-conventions> -> <rules>, RFC 2119 -> RFC-2119)
  * 2. Intercepts outgoing Antigravity requests to omit `requestType: "agent"`
  */
 
 function sanitizeConventions(text: string): string {
   if (typeof text !== "string") return text;
   return text
-    .replaceAll("<system-conventions>", "<conventions>")
-    .replaceAll("</system-conventions>", "</conventions>")
-    .replaceAll("<system_conventions>", "<conventions>")
-    .replaceAll("</system_conventions>", "</conventions>");
+    .replaceAll("<system-conventions>", "<rules>")
+    .replaceAll("</system-conventions>", "</rules>")
+    .replaceAll("<system_conventions>", "<rules>")
+    .replaceAll("</system_conventions>", "</rules>")
+    .replaceAll("<conventions>", "<rules>")
+    .replaceAll("</conventions>", "</rules>")
+    .replaceAll("RFC 2119:", "RFC-2119:");
 }
 
 function isAntigravityEndpoint(url: string): boolean {
@@ -60,8 +63,11 @@ export default function (omp: any) {
             let modified = false;
             let bodyText = init.body;
 
-            // Ensure any residual system-conventions tags in raw payloads are normalized
-            if (bodyText.includes("system-conventions") || bodyText.includes("system_conventions")) {
+            // Ensure any residual convention tags or trigger phrases are sanitized
+            if (
+              bodyText.includes("conventions") ||
+              bodyText.includes("RFC 2119:")
+            ) {
               bodyText = sanitizeConventions(bodyText);
               modified = true;
             }

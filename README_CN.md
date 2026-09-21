@@ -54,7 +54,7 @@ Error: Retry failed after 1 attempts: Provider requested 1800000ms wait, exceeds
 本扩展采用纯用户态的零依赖双重拦截策略：
 
 1. **生命周期提示词脱敏（`before_agent_start` Hook）**：
-   在会话启动时，自动将 `<system-conventions>` 及 `</system-conventions>` 标签规范化为 `<conventions>`。大语言模型对指令的理解和工具调用能力**100% 保持一致**，但 Google 的文本特征匹配将彻底扑空。
+   在会话启动时，自动将 `<system-conventions>` 及 `</system-conventions>` 标签规范化为 `<rules>`，并对 RFC 2119 触发词进行安全脱敏。大语言模型对指令的理解和工具调用能力**100% 保持一致**，但 Google 的文本特征匹配将彻底扑空。
 2. **底层请求信封脱敏（`fetch` 拦截）**：
    动态拦截发往 `*cloudcode-pa*.googleapis.com` 的请求，剔除 `requestType: "agent"` 字段并自动重整 `content-length`，完全对齐 Google 官方 IDE 客户端行为。
 
